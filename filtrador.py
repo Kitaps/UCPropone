@@ -44,4 +44,40 @@ df5 = df5.loc[df5["COD_DEPE2"] != 5]
 df6 = df5.loc[(df5["EDAD_ALU"] > 10) & (df5["EDAD_ALU"] < 13)]
 # print(df6.count()) # 175573
 
-print(df6.head())
+municipales = df6.loc[df6["COD_DEPE2"] == 1]
+p_subvencionado = df6.loc[df6["COD_DEPE2"] == 2]
+p_pagado = df6.loc[df6["COD_DEPE2"] == 3]
+
+
+# Test functions
+# Agrupamos por colegio
+# grouped = df6.groupby(["NOM_RBD", "COD_DEPE2"])
+# print(grouped["COD_REG_RBD"].count())
+# print(grouped.count().sum()) # 1670 Colegios que cumplen con criterios con 175573 alumnos
+
+grouped = municipales.groupby(["NOM_RBD"])
+# print("------------------------------------Municipales---------------------------------")
+# print(grouped.count())
+# print(grouped["COD_REG_RBD"].count().reset_index().sort_values("COD_REG_RBD"))
+grouped["COD_REG_RBD"].count().reset_index().sort_values("COD_REG_RBD").to_csv("municipales.csv", index=False)
+# print("--------------------------------------------------------------------------------")
+# print(grouped.count().sum()) # 441 Colegios que cumplen con criterios con 42583 alumnos
+
+grouped = p_subvencionado.groupby(["NOM_RBD"])
+# print("-----------------------------Particulares Subvencionados------------------------")
+# print(grouped.count())
+# print(grouped["COD_REG_RBD"].count())
+grouped["COD_REG_RBD"].count().reset_index().sort_values("COD_REG_RBD").to_csv("p_subvencionados.csv", index=False)
+# print("--------------------------------------------------------------------------------")
+# print(grouped.count().sum()) # 960 Colegios que cumplen con criterios con 105623 alumnos
+
+grouped = p_pagado.groupby(["NOM_RBD"])
+# print("-----------------------------Particulares Pagados-------------------------------")
+# print(grouped.count())
+# print(grouped["COD_REG_RBD"].count())
+grouped["COD_REG_RBD"].count().reset_index().sort_values("COD_REG_RBD").to_csv("p_pagados.csv", index=False)
+# print("--------------------------------------------------------------------------------")
+# print(grouped.count().sum()) # 271 Colegios que cumplen con criterios con 27367 alumnos
+
+
+# print(df6.head())
